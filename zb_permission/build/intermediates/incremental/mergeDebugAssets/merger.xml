@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\XiangMu\JDYX\zb_permission\src\main\assets"/><source path="E:\XiangMu\JDYX\zb_permission\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\XiangMu\JDYX\zb_permission\src\debug\assets"/></dataSet></merger>

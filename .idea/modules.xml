@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JDYX.iml" filepath="$PROJECT_DIR$/JDYX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyStatusBarLibrary/MyStatusBarLibrary.iml" filepath="$PROJECT_DIR$/MyStatusBarLibrary/MyStatusBarLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umenglandinglibrary/umenglandinglibrary.iml" filepath="$PROJECT_DIR$/umenglandinglibrary/umenglandinglibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zb_permission/zb_permission.iml" filepath="$PROJECT_DIR$/zb_permission/zb_permission.iml" />
+    </modules>
+  </component>
+</project>
