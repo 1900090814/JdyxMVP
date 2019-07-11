@@ -1,6 +1,5 @@
 package text.jdyx.com.jdyx.base;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import text.jdyx.com.jdyx.loader.MainApplication;
+import com.hjq.toast.ToastUtils;
+
 import text.jdyx.com.jdyx.utils.NetUtil;
 
 
@@ -29,7 +26,6 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MainApplication.myFragment = this;
         View view = inflater.inflate(getFragmentLayoutId(), container, false);
         initFragmentView(view);
         initFragmentData();
@@ -59,12 +55,12 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(isReuseView && rootView != null ? rootView : view, savedInstanceState);
     }
 
-    @Override
-    public void setMenuVisibility(boolean menuVisible) {
-        super.setMenuVisibility(menuVisible);
-        if (this.getView() != null)
-            this.getView().setVisibility(menuVisible ? View.VISIBLE : View.GONE);
-    }
+//    @Override
+//    public void setMenuVisibility(boolean menuVisible) {
+//        super.setMenuVisibility(menuVisible);
+//        if (this.getView() != null)
+//            this.getView().setVisibility(menuVisible ? View.VISIBLE : View.GONE);
+//    }
 
     //setUserVisibleHint()在Fragment创建时会先被调用一次，传入isVisibleToUser = false
     //如果当前Fragment可见，那么setUserVisibleHint()会再次被调用一次，传入isVisibleToUser = true
@@ -145,18 +141,7 @@ public abstract class BaseFragment extends Fragment {
     protected  void stopLoadData(){}
 
     protected void showToast(String hint) {
-        Toast toast=null;
-        if (toast == null) {
-            toast = Toast.makeText(getContext(), hint, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(hint);
-            toast.setDuration(Toast.LENGTH_SHORT);
-        }
-        toast.show();
-    }
-    protected void hideEditText(EditText editText){
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        ToastUtils.show(hint);
     }
 
 
@@ -210,5 +195,9 @@ public abstract class BaseFragment extends Fragment {
     }
     protected boolean isFragmentVisible() {
         return isFragmentVisible;
+    }
+    //检查网络
+    protected boolean isNetworkAvailable(){
+        return NetUtil.isNetworkAvailable(getContext());
     }
 }

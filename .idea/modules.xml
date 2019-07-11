@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JDYX.iml" filepath="$PROJECT_DIR$/JDYX.iml" />
+      <module fileurl="file://E:\FlutterXiangMu\JdyxMVP\JDYX.iml" filepath="E:\FlutterXiangMu\JdyxMVP\JDYX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/JdyxMVP.iml" filepath="$PROJECT_DIR$/.idea/JdyxMVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyStatusBarLibrary/MyStatusBarLibrary.iml" filepath="$PROJECT_DIR$/MyStatusBarLibrary/MyStatusBarLibrary.iml" />
+      <module fileurl="file://E:\FlutterXiangMu\JdyxMVP\MyStatusBarLibrary\MyStatusBarLibrary.iml" filepath="E:\FlutterXiangMu\JdyxMVP\MyStatusBarLibrary\MyStatusBarLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\FlutterXiangMu\JdyxMVP\app\app.iml" filepath="E:\FlutterXiangMu\JdyxMVP\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/umenglandinglibrary/umenglandinglibrary.iml" filepath="$PROJECT_DIR$/umenglandinglibrary/umenglandinglibrary.iml" />
+      <module fileurl="file://E:\FlutterXiangMu\JdyxMVP\umenglandinglibrary\umenglandinglibrary.iml" filepath="E:\FlutterXiangMu\JdyxMVP\umenglandinglibrary\umenglandinglibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/zb_permission/zb_permission.iml" filepath="$PROJECT_DIR$/zb_permission/zb_permission.iml" />
+      <module fileurl="file://E:\FlutterXiangMu\JdyxMVP\zb_permission\zb_permission.iml" filepath="E:\FlutterXiangMu\JdyxMVP\zb_permission\zb_permission.iml" />
     </modules>
   </component>
 </project>

@@ -2,7 +2,6 @@ package text.jdyx.com.jdyx.model.net;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -24,10 +23,12 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import text.jdyx.com.jdyx.App;
+import okhttp3.logging.HttpLoggingInterceptor;
+import text.jdyx.com.jdyx.loader.MainApplication;
 import text.jdyx.com.jdyx.model.callback.MyCallBack;
 import text.jdyx.com.jdyx.utils.Constants;
 import text.jdyx.com.jdyx.utils.LogUtil;
+import text.jdyx.com.jdyx.utils.NetUtil;
 
 import static text.jdyx.com.jdyx.utils.Constants.DOWNLOAD_PROGRESS;
 
@@ -62,53 +63,78 @@ public class OkHttpUtils implements IHttp{
 
 
     private OkHttpUtils() {
-        //创建Cache对象，并设置缓存路径以及缓存区域大小
-        Cache cache = new Cache(App.mActivity.getCacheDir(), 10 * 1024 * 1024);
-        okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)//请求超时时间
-                .cache(cache)//设置缓存
-                .addInterceptor(getInterceptor())
-                .addNetworkInterceptor(getInterceptor())
-                .build();
-    }
+        //创建Cache对象，并设置缓存路径以及缓存区域大小。
+        Cache cache = new Cache(MainApplication.mActivity.getCacheDir(), 10 * 1024 * 1024);
 
-    public Interceptor getInterceptor(){
-        /***
-         * 拦截器，保存缓存的方法
-         * 2016年7月29日11:22:47
-         */
-        Interceptor interceptor = new Interceptor() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+
+
+        //添加HttpLogging拦截器，方便观察，上传和返回json
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
+            public void log(String message) {
+//                LogUtil.e("OkHttp拦截器", message);
+            }
+        });
+
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        builder.addInterceptor(loggingInterceptor);
+
+
+
+        builder.cache(cache).addInterceptor(new Interceptor() {
+
+            @Override
+
             public Response intercept(Chain chain) throws IOException {
+
                 Request request = chain.request();
-                boolean netAvailable = NetworkUtil.isNetAvailable(App.context);
-                if (netAvailable) {
-                    Response response = chain.proceed(request);
-                    int maxAge = 6; // 在线缓存在1分钟内可读取
-                    String cacheControl = request.cacheControl().toString();
-                    Log.e("缓存","在线缓存在1分钟内可读取："+cacheControl);
-                    return response.newBuilder()
-                            .removeHeader("Pragma")
-                            .removeHeader("Cache-Control")
-                            .header("Cache-Control", "public, max-age=" + maxAge)
-                            .build();
-                } else {
-                    request = request.newBuilder()
-                            .cacheControl(CacheControl.FORCE_CACHE)//或者直接用系统的
+
+                if (!NetUtil.isNetworkAvailable(MainApplication.context)){
+
+                    Request newRequest = request.newBuilder()
+
+                            .cacheControl(CacheControl.FORCE_CACHE)
+
                             .build();
 
-                    Response response = chain.proceed(request);
-                    //下面注释的部分设置也没有效果，因为在上面已经设置了
-                    return response.newBuilder()
-                            //.removeHeader("Pragma")
-                            //.removeHeader("Cache-Control")
-                            //.header("Cache-Control", "public, only-if-cached, max-stale=50")
-                            .build();
+
+
+                    return chain.proceed(newRequest);
+
                 }
+
+                else{
+
+                    int maxTime =24*60*60;
+
+                    Response response=chain.proceed(request);
+
+                    Response newResponse = response.newBuilder()
+
+                            .header("Cache-Control","public, only-if-cached, max-stale="+maxTime)
+
+                            .removeHeader("Progma")
+
+                            .build();
+
+
+
+                    return newResponse;
+
+                }
+
             }
-        };
-        return interceptor;
+
+        });
+
+
+        okHttpClient=builder.build();
     }
+
 
     public static synchronized OkHttpUtils getInstance(){
         if (utils==null){
@@ -128,7 +154,7 @@ public class OkHttpUtils implements IHttp{
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
-                App.mActivity.runOnUiThread(new Runnable() {
+                MainApplication.mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         myCallBack.onError(e.toString());
@@ -139,7 +165,7 @@ public class OkHttpUtils implements IHttp{
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String jsonData = response.body().string();
-                App.mActivity.runOnUiThread(new Runnable() {
+                MainApplication.mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                             myCallBack.onSuccess(getGeneric(jsonData,myCallBack));
@@ -168,7 +194,7 @@ public class OkHttpUtils implements IHttp{
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
-                App.mActivity.runOnUiThread(new Runnable() {
+                MainApplication.mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         myCallBack.onError(e.toString());
@@ -179,7 +205,7 @@ public class OkHttpUtils implements IHttp{
             @Override
             public void onResponse( Call call, Response response) throws IOException {
                 final String jsonData = response.body().string();
-                App.mActivity.runOnUiThread(new Runnable() {
+                MainApplication.mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         LogUtil.e("JSON串",jsonData);

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
@@ -47,7 +48,7 @@ public class SampleApplicationLike extends DefaultApplicationLike {
         Beta.betaPatchListener = new BetaPatchListener() {
             @Override
             public void onPatchReceived(String patchFile) {
-                Toast.makeText(getApplication(), "补丁下载地址" + patchFile, Toast.LENGTH_SHORT).show();
+                ToastUtils.show("补丁下载地址");
             }
 
             @Override
@@ -61,23 +62,22 @@ public class SampleApplicationLike extends DefaultApplicationLike {
 
             @Override
             public void onDownloadSuccess(String msg) {
-                Toast.makeText(getApplication(), "补丁下载成功", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("补丁下载成功");
             }
 
             @Override
             public void onDownloadFailure(String msg) {
-                Toast.makeText(getApplication(), "补丁下载失败", Toast.LENGTH_SHORT).show();
-
+                ToastUtils.show("补丁下载失败");
             }
 
             @Override
             public void onApplySuccess(String msg) {
-                Toast.makeText(getApplication(), "补丁应用成功", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("补丁应用成功");
             }
 
             @Override
             public void onApplyFailure(String msg) {
-                Toast.makeText(getApplication(), "补丁应用失败"+msg, Toast.LENGTH_SHORT).show();
+                ToastUtils.show("补丁应用失败");
             }
 
             @Override

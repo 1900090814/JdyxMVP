@@ -15,13 +15,14 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import text.jdyx.com.jdyx.App;
+import com.hjq.toast.ToastUtils;
+
 import text.jdyx.com.jdyx.R;
+import text.jdyx.com.jdyx.loader.MainApplication;
 import text.jdyx.com.jdyx.utils.AutoUtils;
 import text.jdyx.com.jdyx.utils.NetUtil;
 import text.jdyx.com.jdyx.utils.SetPopupwindow;
 import text.jdyx.com.jdyx.utils.StatusBar;
-import text.jdyx.com.jdyx.utils.ToastUtils;
 
 
 /**
@@ -33,8 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.mActivity=this;
-        App.mFragmentActivity=this;
+        MainApplication.mActivity=this;
         //沉浸式透明
         StatusBar.fullScreen(this);
         AutoUtils.auto(this);
@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     public abstract int getActivityLayout();
 
     public void showToast(String msg){
-        ToastUtils.showShort(this,msg);
+        ToastUtils.show(msg);
     };
 
     public PopupWindow showPopupWindow(Context context, int layout ){

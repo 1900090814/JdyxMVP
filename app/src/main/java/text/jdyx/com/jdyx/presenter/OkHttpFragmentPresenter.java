@@ -1,10 +1,9 @@
 package text.jdyx.com.jdyx.presenter;
 
-import android.widget.Toast;
+import com.hjq.toast.ToastUtils;
 
 import java.util.Map;
 
-import text.jdyx.com.jdyx.App;
 import text.jdyx.com.jdyx.model.biz.IOkHttpFragmentModel;
 import text.jdyx.com.jdyx.model.biz.OkHttpFragmentModelImpl;
 import text.jdyx.com.jdyx.model.callback.MyCallBack;
@@ -56,7 +55,7 @@ public class OkHttpFragmentPresenter implements HomeContract.OkhttpFragmentPrese
             public void onDownloading(int progress) {
                 LogUtil.e("下载",progress+"");
                 if (progress>99){
-                    Toast.makeText(App.mActivity, "下载成功！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("下载成功");
                 }
             }
 
